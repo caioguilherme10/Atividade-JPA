@@ -1,6 +1,8 @@
 package com.mycompany.atividade.consulta.main;
 
+import com.mycompany.atividade.consulta.domain.questao1.AlunoVO;
 import com.mycompany.atividade.consulta.domain.questao1.Livro;
+import com.mycompany.atividade.consulta.domain.questao1.Professor;
 import com.mycompany.atividade.consulta.domain.questao2.Pessoa2;
 import com.mycompany.atividade.consulta.domain.questao2.Publicacao;
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ public class MainConsultasJPQL {
         EntityManager em = Persistence.createEntityManagerFactory("Atividade-Consulta").createEntityManager();
         //new IniciadorBancoDeDados(em).dadosIniciais();
         
-        questao1A(em);
+//        questao1A(em);
 //        questao1B(em);
 //        questao1C(em);
 //        questao1D(em);
@@ -42,22 +44,45 @@ public class MainConsultasJPQL {
 
     //Uma consulta que selecione todos os professores que possuem Telefone e residemna rua “Que atividade fácil”.
     private static void questao1B(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT p FROM Professor p WHERE p.telefones IS NOT EMPTY AND p.endereco.rua =:rua";
+        TypedQuery<Professor> createQuery = em.createQuery(jpql,Professor.class);
+        createQuery .setParameter("rua","Que atividade fácil");
+        createQuery.getResultList()
+            .forEach(
+                f -> System.out.println(f.getNome())
+            );
     }
 
     //Uma classe, AlunoVO, que representa o nome, CPF e idade do Aluno. Crie uma consulta, que retorna uma lista de todos os AlunoVO, selecionando todos os alunos que pertencem a turma de 2019.1.
     private static void questao1C(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT new com.mycompany.atividade.consulta.domain.questao1.AlunoVO (a.nome, a.cpf, a.idade) FROM Aluno a WHERE a.turma= :turma";
+        TypedQuery<AlunoVO> createQuery = em.createQuery(jpql, AlunoVO.class);
+        createQuery .setParameter("turma","2019.1");
+        createQuery.getResultList().forEach(System.out::println);
     }
 
     //Uma consulta que seleciona todas os Professores que possuem algum telefone que termina em 8.
     private static void questao1D(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT p FROM Professor p, Telefone t WHERE t MEMBER OF p.telefones AND t.numero LIKE :numero";
+        TypedQuery<Professor> createQuery = em.createQuery(jpql,Professor.class);
+        createQuery .setParameter("numero","%8");
+        createQuery.getResultList()
+            .forEach(
+                f -> System.out.println(f.getNome())
+            );
     }
 
     //Uma consulta que seleciona todos os livros dos Autores da cidade de Cajazeiras e tiveram seu lançamento entre os dias 01/01/2019 e 12/12/2019.
     private static void questao1E(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT DISTINCT(l) FROM Livro l, IN (l.autores) a WHERE a.endereco.cidade = :cidade AND l.lancamento BETWEEN :lan1 AND :lan2";
+        TypedQuery<Livro> query = em.createQuery(jpql, Livro.class);
+        query .setParameter("cidade","Cajazeiras");
+        query .setParameter("lan1",LocalDate.of(2019, 01, 01));
+        query .setParameter("lan2",LocalDate.of(2019, 12, 12));
+        List<Livro> lista = query.getResultList();
+        lista.forEach(
+            l -> System.out.println(l.getTitulo())
+        );
     }
 
     //Uma consulta que selecione os Livros dos Autores que começam com a letra “J”.

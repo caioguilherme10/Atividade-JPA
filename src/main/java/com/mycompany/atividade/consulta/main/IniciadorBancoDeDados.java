@@ -77,7 +77,7 @@ public class IniciadorBancoDeDados {
         telefones2.add(new Telefone("(83) 99951-5113", TelefoneType.RESIDENCIAL));
         telefones2.add(new Telefone("(83) 99951-5113", TelefoneType.COMERCIAL));
         List<Telefone> telefones3 = new ArrayList<>();
-        telefones3.add(new Telefone("(83) 99951-5113", TelefoneType.RESIDENCIAL));
+        telefones3.add(new Telefone("(83) 99951-5118", TelefoneType.RESIDENCIAL));
         telefones3.add(new Telefone("(83) 99951-5113", TelefoneType.COMERCIAL));
 	List<Telefone> telefones4 = new ArrayList<>();
         telefones4.add(new Telefone("(83) 99951-5113", TelefoneType.RESIDENCIAL));
