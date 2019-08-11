@@ -3,10 +3,8 @@ package com.mycompany.atividade.consulta.main;
 import com.mycompany.atividade.consulta.domain.questao1.AlunoVO;
 import com.mycompany.atividade.consulta.domain.questao1.Livro;
 import com.mycompany.atividade.consulta.domain.questao1.Professor;
-import com.mycompany.atividade.consulta.domain.questao2.Pessoa2;
 import com.mycompany.atividade.consulta.domain.questao2.Publicacao;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -46,7 +44,7 @@ public class MainConsultasJPQL {
     private static void questao1B(EntityManager em) {
         String jpql = "SELECT p FROM Professor p WHERE p.telefones IS NOT EMPTY AND p.endereco.rua =:rua";
         TypedQuery<Professor> createQuery = em.createQuery(jpql,Professor.class);
-        createQuery .setParameter("rua","Que atividade fácil");
+        createQuery.setParameter("rua","Que atividade fácil");
         createQuery.getResultList()
             .forEach(
                 f -> System.out.println(f.getNome())
