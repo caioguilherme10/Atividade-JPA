@@ -24,11 +24,9 @@ public class PessoaUm implements Serializable{
     private LocalDate dataNasc;
     
     public PessoaUm() {
-	super();
     }
 	
     public PessoaUm(String nome, String cpf, Integer idade, Endereco endereco, LocalDate dataNasc) {
-	super();
 	this.nome = nome;
 	this.cpf = cpf;
 	this.idade = idade;

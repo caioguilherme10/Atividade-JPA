@@ -1,7 +1,9 @@
 package com.mycompany.atividade.consulta.main;
 
+import com.mycompany.atividade.consulta.domain.questao1.Livro;
 import com.mycompany.atividade.consulta.domain.questao2.Pessoa2;
 import com.mycompany.atividade.consulta.domain.questao2.Publicacao;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,7 +16,7 @@ public class MainConsultasJPQL {
         EntityManager em = Persistence.createEntityManagerFactory("Atividade-Consulta").createEntityManager();
         //new IniciadorBancoDeDados(em).dadosIniciais();
         
-//        questao1A(em);
+        questao1A(em);
 //        questao1B(em);
 //        questao1C(em);
 //        questao1D(em);
@@ -27,28 +29,45 @@ public class MainConsultasJPQL {
 //        questao2D(em);
     }
 
+    //Uma consulta que selecione todos os livros dos autores que não nasceram no dia 21/11/1982.
     private static void questao1A(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT DISTINCT(l) FROM Livro l, Autor a WHERE a MEMBER OF l.autores AND a.dataNasc <> :datanasc";
+        TypedQuery<Livro> createQuery = em.createQuery(jpql,Livro.class);
+        createQuery .setParameter("datanasc",LocalDate.of(1982, 11, 21));
+        createQuery.getResultList()
+            .forEach(
+                l -> System.out.println(l.getTitulo())
+            );
     }
 
+    //Uma consulta que selecione todos os professores que possuem Telefone e residemna rua “Que atividade fácil”.
     private static void questao1B(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Uma classe, AlunoVO, que representa o nome, CPF e idade do Aluno. Crie uma consulta, que retorna uma lista de todos os AlunoVO, selecionando todos os alunos que pertencem a turma de 2019.1.
     private static void questao1C(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Uma consulta que seleciona todas os Professores que possuem algum telefone que termina em 8.
     private static void questao1D(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Uma consulta que seleciona todos os livros dos Autores da cidade de Cajazeiras e tiveram seu lançamento entre os dias 01/01/2019 e 12/12/2019.
     private static void questao1E(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Uma consulta que selecione os Livros dos Autores que começam com a letra “J”.
     private static void questao1F(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT DISTINCT(l) FROM Livro l, IN (l.autores) a WHERE LOWER(a.nome) LIKE 'j%' ";
+        TypedQuery<Livro> query = em.createQuery(jpql, Livro.class);
+        List<Livro> lista = query.getResultList();
+        lista.forEach(
+            l -> System.out.println(l.getTitulo())
+        );
     }
     
     //O nome do revisor, o titulo da publicacao e o nome da area em que a revisor tem o atributo id igual 3.
@@ -84,7 +103,7 @@ public class MainConsultasJPQL {
 
     //O nome e a quantidade de Publicacoes escritas por Escritores com mais que tres premios
     private static void questao2D(EntityManager em) {
-        String jpql = "SELECT p.titulo , COUNT(p) AS quantidade FROM Publicacao p WHERE p.escritor.premios > 3 GROUP BY p.titulo , quantidade ";
+        String jpql = "SELECT p.titulo , COUNT(p) AS quantidade FROM Publicacao p WHERE p.escritor.premios > 3 GROUP BY p.titulo ";
         List<Object[]> resultList = em.createQuery(jpql, Object[].class).getResultList();
         for (Object[] objects : resultList) {
             System.out.println(objects[0] + " " + objects[1]);

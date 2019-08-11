@@ -8,6 +8,12 @@
     <class>com.mycompany.atividade.consulta.domain.questao2.Publicacao</class>
     <class>com.mycompany.atividade.consulta.domain.questao2.Revisor</class>
     <class>com.mycompany.atividade.consulta.conversor.ConversorLocalDate</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.Aluno</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.Autor</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.Livro</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.PessoaUm</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.Professor</class>
+    <class>com.mycompany.atividade.consulta.domain.questao1.Telefone</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/consultas"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
